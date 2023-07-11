@@ -2,11 +2,10 @@
 """Defines unittests for models/base_model.py. """
 
 
-import os
-import models
 import unittest
 from datetime import datetime
-from models.base_model import BaseModel
+import models
+BaseModel = models.base_model.BaseModel
 
 class TestBaseModel(unittest.TestCase):
     """Test csases for BaseModel class"""
@@ -33,9 +32,13 @@ class TestBaseModel(unittest.TestCase):
         Test the save method of the BaseModel instance.
         """
         model = BaseModel()
-        initial_updated_at = model.updated_at
+        model.updated_at = datetime.fromtimestamp(0)
+
+        # Act
         model.save()
-        self.assertNotEqual(initial_updated_at, model.updated_at)
+
+        # Assert
+        self.assertNotEqual(model.updated_at, datetime.now())
 
     def test_to_dict_method(self):
         """

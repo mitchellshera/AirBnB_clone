@@ -1,9 +1,13 @@
 import json
 from os import path
-
+from models.base_model import BaseModel
+import models
 
 class FileStorage:
-    __file_path = "file.json"
+    """It serializes instances to a JSON file and 
+    deserializes back to instances"""
+    
+    file_path = "file.json"
     __objects = {}
 
     def all(self):
@@ -21,23 +25,25 @@ class FileStorage:
 
     def save(self):
         """
-        Serializes __objects to the JSON file (__file_path).
+        Serializes __objects to the JSON file (file_path).
         """
         serialized_objects = {}
         for key, value in self.__objects.items():
             serialized_objects[key] = value.to_dict()
-        with open(self.__file_path, "w") as file:
+        with open(self.file_path, "w") as file:
             json.dump(serialized_objects, file)
 
     def reload(self):
         """
-        Deserializes the JSON file (__file_path) to __objects.
+        Deserializes the JSON file (file_path) to __objects.
         """
-        if path.exists(self.__file_path):
-            with open(self.__file_path, "r") as file:
+        try:
+            with open(FileStorage.file_path, "r") as file:
                 data = json.load(file)
-                for key, value in data.items():
-                    class_name, obj_id = key.split('.')
-                    module = __import__('models', fromlist=[class_name])
-                    cls = getattr(module, class_name)
-                    self.__objects[key] = cls(**value)
+                for value in data.values():
+                    my_class = value["__class__"]
+                    my_class = eval(my_class)
+                    obj = my_class(**value)
+                    self.new(obj)
+        except:
+            pass

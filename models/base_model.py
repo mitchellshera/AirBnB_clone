@@ -3,7 +3,6 @@
 import uuid
 from datetime import datetime
 import models
-from models import storage
 
 class BaseModel:
     """
@@ -29,7 +28,7 @@ class BaseModel:
             self.updated_at = datetime.now()
             
         if kwargs and "__class__" not in kwargs:
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -43,7 +42,8 @@ class BaseModel:
         Update updated_at with the current datetime.
         """
         self.updated_at = datetime.now()
-        storage.save(self)
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self):
         """
