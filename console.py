@@ -8,6 +8,7 @@ It contains the class HBNBCommand
 import cmd
 import json
 from models.base_model import BaseModel
+import models
 
 
 class HBNBCommand(cmd.Cmd):
@@ -29,7 +30,7 @@ class HBNBCommand(cmd.Cmd):
         """ Do nothing when empty line is passed as argument"""
         pass
 
-    def do_create(self, args):
+    def do_create(self, arg):
         """ 
         create a new instance of BaseModel
         """
@@ -42,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance.save()
             print(new_instance.id)
 
-    def do_show(self, arg)
+    def do_show(self, arg):
         """Print the string represantation of an instance"""
         args = arg.split()
         if not arg:
@@ -84,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             obj_list = []
-            for obj_key in all_abjs:
+            for obj_key in all_objs:
                 if not arg or obj_key.split(".")[0] == arg:
                     obj_list.append(str(all_objs[obj_key]))
             print(obj_list)
@@ -113,9 +114,6 @@ class HBNBCommand(cmd.Cmd):
                 obj_instance = all_objs[obj_key]
                 setattr(obj_instance, attr_name, attr_value)
                 obj_instance.save()
-
-
-
 
 
 if __name__ == '__main__':
