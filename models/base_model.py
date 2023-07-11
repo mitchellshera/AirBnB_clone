@@ -3,8 +3,12 @@
 import uuid
 from datetime import datetime
 import models
+from models import storage
 
 class BaseModel:
+    """
+    class BaseModel definition for AirBnB clone project
+    """
     def __init__(self, *args, **kwargs):
         """
         Initialize BaseModel instance.
@@ -23,6 +27,9 @@ class BaseModel:
             self.created_at = datetime.now()
         if "updated_at" not in kwargs:
             self.updated_at = datetime.now()
+            
+        if kwargs and "__class__" not in kwargs:
+            storage.new(self)
 
     def __str__(self):
         """
@@ -36,6 +43,7 @@ class BaseModel:
         Update updated_at with the current datetime.
         """
         self.updated_at = datetime.now()
+        storage.save(self)
 
     def to_dict(self):
         """

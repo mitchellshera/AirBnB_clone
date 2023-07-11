@@ -1,11 +1,16 @@
 #!/usr/bin/python3
+"""Defines unittests for models/base_model.py. """
 
+
+import os
+import models
 import unittest
 from datetime import datetime
-import models
 from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
+    """Test csases for BaseModel class"""
+    
     def test_attributes(self):
         """
         Test that the BaseModel instance has the correct attributes.
