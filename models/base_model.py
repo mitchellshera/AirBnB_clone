@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
     class BaseModel definition for AirBnB clone project
@@ -12,23 +13,20 @@ class BaseModel:
         """
         Initialize BaseModel instance.
         """
-        if kwargs:
-            for key, value in kwargs.items():
-                if key != "__class__":
-                    if key == "created_at" or key == "updated_at":
-                        value = datetime.strptime(value,
-                                                  "%Y-%m-%dT%H:%M:%S.%f")
-                    setattr(self, key, value)
-
-        if "id" not in kwargs:
+        if not kwargs:
             self.id = str(uuid.uuid4())
-        if "created_at" not in kwargs:
             self.created_at = datetime.now()
-        if "updated_at" not in kwargs:
             self.updated_at = datetime.now()
-            
-        if kwargs and "__class__" not in kwargs:
             models.storage.new(self)
+        else:
+            for key, value in kwargs.items():
+                if key in ("updated_at", "created_at"):
+                    self.__dict__[key] = datetime.strptime(
+                        value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
+                else:
+                    self.__dict__[key] = value
 
     def __str__(self):
         """

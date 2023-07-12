@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, *args):
-        """ 
+        """
         create a new instance of BaseModel
         """
         if len(args) < 2:
