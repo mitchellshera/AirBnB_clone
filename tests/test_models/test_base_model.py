@@ -8,7 +8,7 @@ import models
 BaseModel = models.base_model.BaseModel
 
 class TestBaseModel(unittest.TestCase):
-    """Test csases for BaseModel class"""
+    """Test cases for BaseModel class"""
     
     def test_attributes(self):
         """
