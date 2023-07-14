@@ -5,9 +5,18 @@ It contains the class HBNBCommand
 """
 import cmd
 import json
-from models.base_model import BaseModel
 import models
+from models.amenity import Amenity
+from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+from models.engine.file_storage import FileStorage
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+        "Place": Place, "Review": Review, "State": State, "User": User}
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
@@ -32,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         else:
             new_instance = eval(args[0])()
@@ -45,7 +54,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -62,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -81,7 +90,7 @@ class HBNBCommand(cmd.Cmd):
         obj_list = []
         if len(args) == 0:
             obj_dict = models.storage.all()
-        elif args[0] in ["BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]:
+        elif args[0] in classes:
             obj_dict = models.storage.all(eval(args[0]))
         else:
             print("** class doesn't exist **")
@@ -98,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in ["BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
