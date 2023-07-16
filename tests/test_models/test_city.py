@@ -7,7 +7,7 @@ This module contains the test cases for models.city
 import models
 import unittest
 from models.city import City
-from models.basemodel import BaseModel
+from models.base_model import BaseModel
 
 
 class test_city(unittest.TestCase):
@@ -23,7 +23,7 @@ class test_city(unittest.TestCase):
         self.assertEqual(self.city.state_id, "")
 
         self.city.state_id = "456"
-        self.assertEqual(self.cit.state_id, "456")
+        self.assertEqual(self.city.state_id, "456")
 
     def test_name(self):
         """ Test for name input"""

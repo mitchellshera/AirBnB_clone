@@ -7,7 +7,6 @@ This module contains the test cases for the file models/place
 import unittest
 import models
 from models.place import Place
-from models.basemodel import BaseModel
 
 
 class test_place(unittest.TestCase):
