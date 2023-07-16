@@ -189,7 +189,8 @@ class HBNBCommand(cmd.Cmd):
                 if command == 'all':
                     self.do_all(class_name)
                 elif command == 'count':
-                    count = sum(1 for key in storage.all() if key.split('.')[0] == class_name)
+                    count = sum(
+                        1 for key in storage.all() if key.split('.')[0] == class_name)
                     print(count)
                 elif command == 'show':
                     if len(args) == 1:
@@ -202,7 +203,8 @@ class HBNBCommand(cmd.Cmd):
                         instance_id = args[0].strip().replace('\"', '')
                         attribute_name = args[1].strip().replace('\"', '')
                         attribute_value = args[2].strip().replace('\"', '')
-                        self.do_update(class_name + ' ' + instance_id + ' ' + attribute_name + ' ' + attribute_value)
+                        self.do_update(
+                            class_name + ' ' + instance_id + ' ' + attribute_name + ' ' + attribute_value)
 
     def do_user(self, arg):
         """Command for User class"""
