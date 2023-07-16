@@ -42,5 +42,5 @@ class FileStorage:
                     my_class = eval(my_class)
                     obj = my_class(**value)
                     self.new(obj)
-        except:
+        except FileNotFoundError:
             pass
