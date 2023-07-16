@@ -29,7 +29,7 @@ class TestFileStorage(unittest.TestCase):
             self.storage.new(instance)
         self.storage.save()
         self.storage.reload()
-            
+
     def tearDown(self):
         self.storage = None
 
@@ -38,7 +38,8 @@ class TestFileStorage(unittest.TestCase):
         self.assertIsInstance(objects, dict)
         self.assertEqual(len(objects), len(self.models))
         for model in self.models.values():
-            key = "{}.{}".format(model.__name__, list(objects.keys())[0].split(".")[1])
+            key = "{}.{}".format(
+                model.__name__, list(objects.keys())[0].split(".")[1])
             self.assertIn(key, objects)
 
     def test_new(self):
@@ -56,9 +57,11 @@ class TestFileStorage(unittest.TestCase):
         objects = self.storage.all()
         self.assertEqual(len(objects), len(self.models))
         for model in self.models.values():
-            key = "{}.{}".format(model.__name__, list(objects.keys())[0].split(".")[1])
+            key = "{}.{}".format(
+                model.__name__, list(objects.keys())[0].split(".")[1])
             self.assertIn(key, objects)
             self.assertIsInstance(objects[key], model)
+
 
 if __name__ == '__main__':
     unittest.main()
