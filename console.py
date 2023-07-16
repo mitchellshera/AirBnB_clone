@@ -3,10 +3,8 @@
 This module is the entry point of the command interpreter
 It contains the class HBNBCommand
 """
-
-import sys
-import json
 import cmd
+import json
 import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -17,19 +15,18 @@ from models.state import State
 from models.user import User
 from models.engine.file_storage import FileStorage
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+        "Place": Place, "Review": Review, "State": State, "User": User}
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    classes = [
-        "BaseModel", "Amenity", "City", "Place", "Review", "State", "User"]
+    class_name = "BaseModel"
 
-    args = sys.argv
-
-    def do_quit(self, args):
+    def do_quit(self, *args):
         """     Quit the program """
         return True
 
-    def do_EOF(self, args):
+    def do_EOF(self, *args):
         """Exit the program """
         print()  # Print a newline before exiting
         return True
@@ -38,26 +35,26 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when an empty line is entered"""
         pass
 
-    def do_create(self, args):
+    def do_create(self, *args):
         """
         create a new instance of BaseModel
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         else:
             new_instance = eval(args[0])()
             new_instance.save()
             print(new_instance.id)
 
-    def do_show(self, args):
+    def do_show(self, *args):
         """
         Prints the string representation of an instance
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -68,13 +65,13 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_destroy(self, args):
+    def do_destroy(self, *args):
         """
         Deletes an instance based on the class name and id
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
@@ -86,14 +83,14 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
-    def do_all(self, args):
+    def do_all(self, *args):
         """
         Prints all string representations of instances
         """
         obj_list = []
         if len(args) == 0:
             obj_dict = models.storage.all()
-        elif args[0] in self.classes:
+        elif args[0] in classes:
             obj_dict = models.storage.all(eval(args[0]))
         else:
             print("** class doesn't exist **")
@@ -104,13 +101,13 @@ class HBNBCommand(cmd.Cmd):
         print(", ".join(obj_list), end="")
         print("]")
 
-    def do_update(self, args):
+    def do_update(self, *args):
         """
         Updates an instance based on the class name and id
         """
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif args[0] not in classes:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
